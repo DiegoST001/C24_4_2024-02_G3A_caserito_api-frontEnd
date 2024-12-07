@@ -9,7 +9,7 @@ import SliderWithCards2 from '../components/WELCOME/SliderWithCards2';
 import Aplicacion from '../components/WELCOME/aplicacion';
 import SectionDivider from '../components/WELCOME/SectionDivider';
 
-const App = () => {
+const Welcome = () => {
   return (
     <div className="bg-primary min-h-screen">
       <Navbar />
@@ -52,4 +52,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Welcome;

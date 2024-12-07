@@ -20,9 +20,10 @@ const Login = () => {
     try {
       const response = await loginUser({ username, password });
 
-      localStorage.setItem('jwt', response.jwt);  
-      localStorage.setItem('roles', JSON.stringify(response.roles));  
-
+      // Almacena datos en localStorage
+      localStorage.setItem('jwt', response.jwt);
+      localStorage.setItem('roles', JSON.stringify(response.roles));
+      localStorage.setItem('username', response.username);
 
       console.log('Login successful:', response);
 
@@ -47,7 +48,7 @@ const Login = () => {
           style={{ backgroundImage: `url(${fondo})` }}
         ></article>
         <article className="w-full h-full flex flex-col justify-center items-center">
-          <img className="mb-5" src={logo} alt="Logo" />
+          <a href="/"><img className="mb-5" src={logo} alt="Logo" /></a>
           <form onSubmit={handleLogin} className="flex flex-col w-[80%]">
             <label className="font-secondary mb-4" htmlFor="username">
               Usuario:

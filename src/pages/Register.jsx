@@ -22,9 +22,13 @@ const Register = () => {
       const data = await registerUser({ username, password, email, telefono, direccion });
 
       if (data.status) {
-        // Almacena JWT y roles en localStorage
+        // Almacena datos en localStorage
         localStorage.setItem('jwt', data.jwt);
         localStorage.setItem('roles', JSON.stringify(data.roles));
+        localStorage.setItem('username', data.username);
+
+        console.log('Registro exitoso:', data);
+
         // Redirige al home
         navigate('/home');
       } else {
@@ -44,7 +48,7 @@ const Register = () => {
           style={{ backgroundImage: `url(${fondo})` }}
         ></article>
         <article className="w-full h-full flex flex-col justify-center items-center">
-          <img className="mb-5" src={logo} alt="Logo" />
+          <a href="/"><img className="mb-5" src={logo} alt="Logo" /></a>
           <form onSubmit={handleRegister} className="flex flex-col w-[80%]">
             <label className="font-secondary mb-1" htmlFor="username">
               Usuario:{' '}
@@ -109,7 +113,7 @@ const Register = () => {
             </button>
             <a
               className="text-center font-body text-sm hover:text-greenPasteTwo"
-              href="/"
+              href="/login"
             >
               ¿Ya tienes cuenta? Inicia sesión
             </a>

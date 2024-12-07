@@ -1,15 +1,17 @@
 import axios from "axios";
 import BASE_URL from "./config";
+import { getToken } from "./authService";  // Asegúrate de importar la función getToken
 
 // Función para agregar un restaurante
-export const addRestaurant = async (token, restaurantData) => {
+export const addRestaurant = async (restaurantData) => {
   try {
+    const token = getToken();  // Obtener el JWT del localStorage
     const response = await axios.post(
       `${BASE_URL}/restaurante/create`,
       restaurantData,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,  // Incluye el token en la cabecera
         },
       }
     );
@@ -20,6 +22,7 @@ export const addRestaurant = async (token, restaurantData) => {
   }
 };
 
+// Función para obtener todos los restaurantes
 export const getAllRestaurants = async () => {
   try {
     const token = getToken();  // Obtener el JWT del localStorage
@@ -36,8 +39,9 @@ export const getAllRestaurants = async () => {
 };
 
 // Función para obtener la lista de restaurantes del usuario autenticado
-export const getMyRestaurants = async (token) => {
+export const getMyRestaurants = async () => {
   try {
+    const token = getToken();  // Obtener el JWT del localStorage
     const response = await axios.get(`${BASE_URL}/restaurante/mis-restaurantes`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -51,8 +55,9 @@ export const getMyRestaurants = async (token) => {
 };
 
 // Función para editar la información de un restaurante
-export const editRestaurant = async (token, restaurantId, restaurantData) => {
+export const editRestaurant = async (restaurantId, restaurantData) => {
   try {
+    const token = getToken();  // Obtener el JWT del localStorage
     const response = await axios.put(
       `${BASE_URL}/restaurante/update/${restaurantId}`,
       restaurantData,
@@ -70,8 +75,9 @@ export const editRestaurant = async (token, restaurantId, restaurantData) => {
 };
 
 // Función para eliminar un restaurante
-export const deleteRestaurant = async (token, restaurantId) => {
+export const deleteRestaurant = async (restaurantId) => {
   try {
+    const token = getToken();  // Obtener el JWT del localStorage
     const response = await axios.delete(
       `${BASE_URL}/restaurante/delete/${restaurantId}`,
       {
