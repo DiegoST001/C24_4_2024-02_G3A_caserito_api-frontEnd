@@ -10,7 +10,7 @@ const Logout = () => {
     clearAuthData();
 
     // Redirigir al usuario a la página principal ("/")
-    navigate('/');
+    navigate('/login');
   };
 
   React.useEffect(() => {

@@ -18,11 +18,12 @@ const Login = () => {
     setError(null);
 
     try {
+      // Realiza el login
       const response = await loginUser({ username, password });
 
       // Almacena datos en localStorage
       localStorage.setItem('jwt', response.jwt);
-      localStorage.setItem('roles', JSON.stringify(response.roles));
+      localStorage.setItem('roles', JSON.stringify(response.roles)); // Guarda los roles como string
       localStorage.setItem('username', response.username);
 
       console.log('Login successful:', response);

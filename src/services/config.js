@@ -1,3 +1,4 @@
-const BASE_URL = "http://localhost:8080/caserito_api";
+const BASE_URL = "https://apiprueba-womd.onrender.com/caserito_api";
+
 
 export default BASE_URL;

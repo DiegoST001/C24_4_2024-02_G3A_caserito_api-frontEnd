@@ -14,6 +14,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center h-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center space-x-2">
           <img src={logo} alt="Logo" className="h-8 sm:h-10 md:h-12" />
+          <a href="https://www.google.com/maps/dir/?api=1&origin=-12.0654167,-77.0593957&destination=-12.0511825,-77.1256967&travelmode=driving" target="_blank">Ver ruta en Google Maps</a><a href="https://www.google.com/maps/dir/?api=1&origin=-12.0654167,-77.0593957&destination=-12.0511825,-77.1256967&travelmode=driving" target="_blank">Ver ruta en Google Maps</a>
         </div>
         <div className="hidden md:flex items-center space-x-4">
           <a href="/register" className="text-sm sm:text-base md:text-lg text-black hover:text-gray-700">Registrar</a>

@@ -1,17 +1,35 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { getToken, hasRole } from "../services/authService";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const token = localStorage.getItem('jwt'); // Verificar el JWT en localStorage
-  const roles = JSON.parse(localStorage.getItem('roles')); // Recuperar los roles desde localStorage
-
-  if (!token || !roles) {
-    return <Navigate to="/" />; // Redirigir a login si no está autenticado
+  // Intentamos obtener el token de autenticación
+  const token = getToken();
+  // Si no hay token, el usuario no está autenticado
+  if (!token) {
+    console.error("Usuario no autenticado: token no encontrado");
+    return <Navigate to="/login" />;  // Redirigir al login
   }
 
-  const hasAccess = roles.some((role) => allowedRoles.includes(role)); // Verificar si el rol está permitido
+  try {
+    // Verificamos si el usuario tiene al menos uno de los roles permitidos
+    const isAuthorized = allowedRoles.some((role) => hasRole(role));
 
-  return hasAccess ? children : <Navigate to="/" />; // Si tiene acceso, mostrar el componente, si no, redirigir
+    // Si no tiene un rol autorizado, redirigimos a la página de inicio o login
+    if (!isAuthorized) {
+      console.error("Usuario no autorizado: rol no permitido");
+      console.log(localStorage);
+
+      return <Navigate to="/" />;  // O podrías redirigir a una página de acceso denegado
+    }
+
+    // Si está autenticado y tiene el rol adecuado, mostramos el contenido
+    return children;
+  } catch (error) {
+    // En caso de error (por ejemplo, problemas con la verificación de roles)
+    console.error("Error al verificar la autorización:", error.message);
+    return <Navigate to="/login" />;  // Redirigir a login si ocurre un error
+  }
 };
 
 export default ProtectedRoute;

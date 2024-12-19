@@ -10,6 +10,7 @@ export default {
       },
       colors: {
         primary: "#f4f4f4",
+        oscure: "#000000",
         secondary: "#a5cfbb",
         textoPincipal: "#333333",
         greenPasteOne: "#C9D991",  //botn seleccionado 

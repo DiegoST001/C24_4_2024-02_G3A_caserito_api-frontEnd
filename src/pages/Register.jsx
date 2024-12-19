@@ -12,15 +12,19 @@ const Register = () => {
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null); // Limpia errores previos
+    setLoading(true); // Inicia el estado de carga
 
     try {
+      // Llamada a la función de registro
       const data = await registerUser({ username, password, email, telefono, direccion });
 
+      // Si el registro es exitoso
       if (data.status) {
         // Almacena datos en localStorage
         localStorage.setItem('jwt', data.jwt);
@@ -35,13 +39,16 @@ const Register = () => {
         setError('Error en el registro: ' + data.msg); // Muestra el mensaje del backend
       }
     } catch (err) {
+      // Si hay un error en el registro, muestra un mensaje de error
       setError('Error al registrar: intenta nuevamente.');
+    } finally {
+      setLoading(false); // Finaliza el estado de carga
     }
   };
 
   return (
     <>
-      {error && <Alert msg={error} />}
+      {error && <Alert msg={error} />} {/* Si hay un error, lo muestra */}
       <main className="flex flex-grow h-full">
         <article
           className="w-full h-full bg-cover bg-center bg-fixed max-md:hidden"
@@ -51,7 +58,7 @@ const Register = () => {
           <a href="/"><img className="mb-5" src={logo} alt="Logo" /></a>
           <form onSubmit={handleRegister} className="flex flex-col w-[80%]">
             <label className="font-secondary mb-1" htmlFor="username">
-              Usuario:{' '}
+              Usuario:
             </label>
             <input
               className="border-none h-14 font-secondary rounded-md text-center"
@@ -62,7 +69,7 @@ const Register = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
             <label className="font-secondary mb-1 mt-2" htmlFor="email">
-              Correo:{' '}
+              Correo:
             </label>
             <input
               className="border-none h-14 font-secondary rounded-md text-center"
@@ -73,7 +80,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <label className="font-secondary mb-1 mt-2" htmlFor="telefono">
-              Teléfono:{' '}
+              Teléfono:
             </label>
             <input
               className="border-none h-14 font-secondary rounded-md text-center"
@@ -84,7 +91,7 @@ const Register = () => {
               onChange={(e) => setTelefono(e.target.value)}
             />
             <label className="font-secondary mb-1 mt-2" htmlFor="direccion">
-              Dirección:{' '}
+              Dirección:
             </label>
             <input
               className="border-none h-14 font-secondary rounded-md text-center"
@@ -95,7 +102,7 @@ const Register = () => {
               onChange={(e) => setDireccion(e.target.value)}
             />
             <label className="font-secondary mb-1 mt-2" htmlFor="password">
-              Contraseña:{' '}
+              Contraseña:
             </label>
             <input
               className="border-none h-14 font-secondary rounded-md text-center"
@@ -106,10 +113,11 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
-              className="mt-5 mb-5 bg-greenPasteTwo hover:bg-greenPasteOne cursor-pointer rounded-lg h-16"
+              className={`mt-5 mb-5 bg-greenPasteTwo hover:bg-greenPasteOne cursor-pointer rounded-lg h-16 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
               type="submit"
+              disabled={loading}  // Desactiva el botón mientras se procesa el registro
             >
-              Registrarse
+              {loading ? 'Registrando...' : 'Registrarse'}
             </button>
             <a
               className="text-center font-body text-sm hover:text-greenPasteTwo"

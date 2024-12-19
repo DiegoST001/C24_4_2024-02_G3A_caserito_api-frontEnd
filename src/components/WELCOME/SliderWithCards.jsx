@@ -1,10 +1,11 @@
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useNavigate } from 'react-router-dom';  // Importar useNavigate
 
 const Card = ({ title, description, image }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden mx-2">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden mx-2 cursor-pointer">
       <img className="w-full h-56 object-cover" src={image} alt={title} />
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2">{title}</h3>
@@ -33,39 +34,22 @@ const responsive = {
   },
 };
 
-const SliderWithCards = () => {
-  const cardData = [
-    {
-      title: "Item 1",
-      description: "Descripción del Item 1",
-      image: "https://via.placeholder.com/300x200", // Cambia la URL por la imagen que desees
-    },
-    {
-      title: "Item 2",
-      description: "Descripción del Item 2",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      title: "Item 3",
-      description: "Descripción del Item 3",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      title: "Item 4",
-      description: "Descripción del Item 4",
-      image: "https://via.placeholder.com/300x200",
-    },
-  ];
+const SliderWithCards = ({ restaurants }) => {
+  const navigate = useNavigate();  // Usamos useNavigate para redirigir
+
+  const handleCardClick = (restaurantName) => {
+    navigate(`/detalleRestaurante/${restaurantName}`);  // Navegar a la ruta con el nombre del restaurante
+  };
 
   return (
     <div className="w-full max-w-screen-lg mx-auto my-10 p-4">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-left mb-4 hover:text-gray-700">
-        Seleccionados para ti
+        Restaurantes Favoritos
       </h2>
       <Carousel
         responsive={responsive}
         infinite={true}
-        autoPlay={false} // Desactivamos el autoplay para que los botones funcionen
+        autoPlay={false}
         customLeftArrow={<CustomLeftArrow />}
         customRightArrow={<CustomRightArrow />}
         keyBoardControl={true}
@@ -74,8 +58,14 @@ const SliderWithCards = () => {
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
       >
-        {cardData.map((card, index) => (
-          <Card key={index} title={card.title} description={card.description} image={card.image} />
+        {restaurants.map((restaurant) => (
+          <div key={restaurant.favoriteId} onClick={() => handleCardClick(restaurant.nombre)}> {/* Al hacer clic, navega a la página de detalle */}
+            <Card
+              title={restaurant.nombre}
+              description={restaurant.descripcion}
+              image={restaurant.img}
+            />
+          </div>
         ))}
       </Carousel>
     </div>

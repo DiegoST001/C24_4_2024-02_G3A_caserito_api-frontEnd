@@ -1,6 +1,6 @@
+// src/pages/Welcome.jsx
 import React from 'react';
-import Navbar from '../components/WELCOME/Navbar';
-import Footer from '../components/WELCOME/Footer';
+import MainLayout from '../layouts/MainLayout'; // Asegúrate de importar el MainLayout
 import Buscar from '../components/WELCOME/buscador';
 import Slider from '../components/WELCOME/slider';
 import Acerca from '../components/WELCOME/acerca';
@@ -11,44 +11,41 @@ import SectionDivider from '../components/WELCOME/SectionDivider';
 
 const Welcome = () => {
   return (
-    <div className="bg-primary min-h-screen">
-      <Navbar />
-      
-      <div className="container mx-auto px-4 flex flex-col justify-center">
-        <div className="">
-          <Buscar />
-        </div>
-        <SectionDivider />
-        
-        <div className="">
-          <Slider />
-        </div>
-        <SectionDivider />
-        
-        <div className="">
-          <SliderWithCards />
-        </div>
-        <SectionDivider />
-        
-        <div className="">
-          <SliderWithCards2 />
-        </div>
-        <SectionDivider />
+    <MainLayout>
+      <div className="bg-primary min-h-screen">
+        <div className="container mx-auto px-4 flex flex-col justify-center">
+          <div className="">
+            <Buscar />
+          </div>
+          <SectionDivider />
 
-        <div className="flex flex-col justify-center items-center">
-          <Acerca />
-        </div>
-        <SectionDivider />
-        
+          <div className="">
+            <Slider />
+          </div>
+          <SectionDivider />
 
-        <div className="">
-          <Aplicacion />
+          <div className="">
+            <SliderWithCards />
+          </div>
+          <SectionDivider />
+
+          <div className="">
+            <SliderWithCards2 />
+          </div>
+          <SectionDivider />
+
+          <div className="flex flex-col justify-center items-center">
+            <Acerca />
+          </div>
+          <SectionDivider />
+
+          <div className="">
+            <Aplicacion />
+          </div>
+          <SectionDivider />
         </div>
-        <SectionDivider />  
       </div>
-
-      <Footer />
-    </div>
+    </MainLayout>
   );
 };
 
